@@ -1,0 +1,28 @@
+module dds(
+  input              clk,
+  input              rst_n,
+  output             sin1,
+  output             sin2,
+  output             cos1,
+  output             cos2
+);
+
+wire  sin_1;
+reg[8:0]             sin1_addr;
+reg[31:0]            fre_word = 32'd3564823;//4150
+reg[31:0]            phaseadder;
+assign  sin1 = sin_1;
+
+
+sin1  sin1_m0(
+    .address (sin1_addr),
+	 .clock   (clk),
+	 .q       (sin_1),
+);
+
+always@(posedge clk)
+begin
+    phaseadder <= phaseadder + fre_word;
+	 sin1_addr <= phaseadder[31:23];
+end
+endmodule
